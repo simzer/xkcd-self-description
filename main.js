@@ -64,15 +64,15 @@ function draw3rdSlide()
 	let w0 = document.getElementById('slide1').width;
 	let h0 = document.getElementById('slide1').height;
 
-	let canvas = new OffscreenCanvas(3*1.2 * w0, 3*1.2 * h0);
+	let canvas = new OffscreenCanvas(3*1.075 * w0, 3*1.075 * h0);
 	drawCanvasFrame(canvas);
 
 	let ctx = canvas.getContext('2d');
 	ctx.filter = 'blur(1.5px)';
 
-	ctx.drawImage(document.getElementById('slide1'), 0.1 * w0, 1.3*h0);
-	ctx.drawImage(document.getElementById('slide2'), 1.3 * w0, 1.3*h0);
-	ctx.drawImage(document.getElementById('slide3'), 2.5 * w0, 1.3*h0);
+	ctx.drawImage(document.getElementById('slide1'), 0.05 * w0, 1.15*h0);
+	ctx.drawImage(document.getElementById('slide2'), 1.1 * w0, 1.15*h0);
+	ctx.drawImage(document.getElementById('slide3'), 2.15 * w0, 1.15*h0);
 
 	let canvas3 = document.getElementById('slide3');
 	canvas3.width = w0;

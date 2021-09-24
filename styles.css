@@ -1,3 +1,10 @@
+body {
+	text-align: center;
+	font-family: Roboto, Sans-serif;
+	width: 100%;
+	color: #444;
+}
+
 .slide {
 	width: 320px; 
 	height: 240px;
