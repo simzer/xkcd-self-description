@@ -146,23 +146,6 @@ function draw3rdSlide()
 	drawCanvasFrame(canvas3, false);
 }
 
-function getAmount(canvas)
-{
-    let context = canvas.getContext('2d');
-    let data = context.getImageData(0, 0, canvas.width, canvas.height).data;
-	let black = 0;
-	let white = 0;
-	for (let i = 0; i < data.length; i+=4)
-	{
-
-		let nonwhite = 
-			(data[i + 0] + data[i + 1] + data[i + 2])/3 < 128;
-
-		if (nonwhite) black++; else white++;
-	}
-	return { black, white };
-}
-
 anim1 = anim1.then(chart => 
 {
 	chart.on('background-draw', event => {
@@ -264,6 +247,24 @@ anim2 = anim2.then(chart =>
 	});
 });
 
+
+function getAmount(canvas)
+{
+    let context = canvas.getContext('2d');
+    let data = context.getImageData(0, 0, canvas.width, canvas.height).data;
+	let black = 0;
+	let white = 0;
+	for (let i = 0; i < data.length; i+=4)
+	{
+
+		let nonwhite = 
+			(data[i + 0] + data[i + 1] + data[i + 2])/3 < 128;
+
+		if (nonwhite) black++; else white++;
+	}
+	return { black, white };
+}
+
 let lastAmounts = [ 
 	{ black: 0, white: width * height },
 	{ black: 0, white: width * height },
@@ -276,7 +277,7 @@ let step = () =>
 		getAmount(document.getElementById('slide1')),
 		getAmount(document.getElementById('slide2')),
 		getAmount(document.getElementById('slide3'))
-	]
+	];
 
 	let diffs = [
 		amounts[0].white - lastAmounts[0].white,
@@ -298,8 +299,14 @@ let step = () =>
 
 	lastAmounts = amounts;
 
-	anim1 = anim1.then(chart => chart.animate({ data: { records } }));
-	anim2 = anim2.then(chart => chart.animate({ data: { records } }));
+	anim1 = anim1.then(chart => chart.animate({ data: { records } }, {
+		duration: '150ms',
+		easing: 'ease-in'
+	}));
+	anim2 = anim2.then(chart => chart.animate({ data: { records } }, {
+		duration: '150ms',
+		easing: 'ease-out'
+	}));
 
 	Promise.all([ anim1, anim2 ]).then(step);
 };
