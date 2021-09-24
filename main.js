@@ -220,8 +220,8 @@ let step = () =>
 
 	lastAmounts = amounts;
 
-	anim1 = anim1.then(chart => chart.animate({ data: { records } }, '300ms'));
-	anim2 = anim2.then(chart => chart.animate({ data: { records } }, '300ms'));
+	anim1 = anim1.then(chart => chart.animate({ data: { records } }));
+	anim2 = anim2.then(chart => chart.animate({ data: { records } }));
 
 	Promise.all([ anim1, anim2 ]).then(step);
 };
