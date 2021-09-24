@@ -1,19 +1,32 @@
+@font-face {
+	font-family: xkcd-script;
+	src: url('/xkcd-script.woff') format('woff');
+}
+
 body {
 	text-align: center;
-	font-family: Roboto, Sans-serif;
+	font-family: Roboto,sans-serif;
 	width: 100%;
 	color: #444;
 	background-color: #fafafa;
 }
 
 h1 {
+	color: #000;
+	font-size: 30px;
+	font-family: Roboto,sans-serif;
 	font-weight: 100;
+	padding: 1em;
+}
+
+p {
+	padding: 1.5em;
 }
 
 .slide {
 	width: 320px; 
 	height: 240px;
 	display: inline-block;
-	border: 1px solid #ddd;
+	margin: 0.3em;
 	background-color: #ffffff;
 }

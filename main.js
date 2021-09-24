@@ -18,11 +18,19 @@ let data = {
 };
 
 let style = {
-	plot: { marker: { 
-		colorPalette: '#000000 #ffffff',
-		label: { fontWeight: 'normal' }
-	}},
-	title: { color: '#000000', fontSize: '2em'},
+	fontFamily: 'xkcd-script',
+	plot: { 
+		marker: { 
+			colorPalette: '#000000 #ffffff',
+			label: { fontWeight: 'normal' }
+		},
+		paddingBottom: '4em'
+	},
+	title: { 
+		paddingTop: '1em',
+		color: '#000000', 
+		fontSize: '2em'
+	},
 	logo: { filter: 'opacity(0)'}
 };
 
@@ -38,54 +46,104 @@ let chart2 = new Vizzu('slide2', {
 let anim1 = chart1.initializing;
 let anim2 = chart2.initializing;
 
-function drawFrame(ctx, w, h)
+function drawFrame(ctx, w, h, fill = true)
 {
+	if (fill) {
+		ctx.beginPath();
+		ctx.fillStyle = '#ffffff';
+		ctx.rect(0, 0, w, h);
+		ctx.fill();
+	}
+
 	ctx.beginPath();
 	ctx.fillStyle = '#ffffff';
 	ctx.strokeStyle = '#000000';
-	ctx.lineWidth = w/320;
-	ctx.rect(0, 0, w, h);
-	ctx.fill();
+	let lw = 1.5*w/320;
+	ctx.lineWidth = lw;
+	ctx.rect(lw/2, lw/2, w-lw, h-lw);
+	if (fill) ctx.fill();
 	ctx.stroke();
 	ctx.lineWidth = 0;
 }
 
-function drawCanvasFrame(canvas)
+function drawCanvasFrame(canvas, fill = true)
 {
 	let w = canvas.width;
 	let h = canvas.height;
 
 	let ctx = canvas.getContext('2d');
-	drawFrame(ctx, w, h);
+	drawFrame(ctx, w, h, fill);
 }
 
 function draw3rdSlide()
 {
-	let w0 = document.getElementById('slide1').width;
-	let h0 = document.getElementById('slide1').height;
+	let canvas1 = document.getElementById('slide1');
+	let w0 = canvas1.width;
+	let h0 = canvas1.height;
 
-	let canvas = new OffscreenCanvas(3*1.075 * w0, 3*1.075 * h0);
-	drawCanvasFrame(canvas);
+	let canvas = new OffscreenCanvas(1.2*3*1.075 * w0, 1.2*3*1.075 * h0);
 
 	let ctx = canvas.getContext('2d');
+
+	ctx.beginPath();
+	ctx.fillStyle = '#ffffff';
+	ctx.rect(0, 0, canvas.width, canvas.height);
+	ctx.fill();
+
 	ctx.filter = 'blur(1.5px)';
 
-	ctx.drawImage(document.getElementById('slide1'), 0.05 * w0, 1.15*h0);
-	ctx.drawImage(document.getElementById('slide2'), 1.1 * w0, 1.15*h0);
-	ctx.drawImage(document.getElementById('slide3'), 2.15 * w0, 1.15*h0);
+	ctx.drawImage(document.getElementById('slide1'), 0.35 * w0, 1.6*h0);
+	ctx.drawImage(document.getElementById('slide2'), 1.43 * w0, 1.6*h0);
+	ctx.drawImage(document.getElementById('slide3'), 2.51 * w0, 1.6*h0);
 
 	let canvas3 = document.getElementById('slide3');
+
 	canvas3.width = w0;
 	canvas3.height = h0;
 
 	let ctx3 = canvas3.getContext('2d');
 
+	ctx3.beginPath();
+	ctx3.fillStyle = '#ffffff';
+	ctx3.rect(0, 0, w0, h0);
+	ctx3.fill();
+
 	ctx3.drawImage(canvas, 0, 0, w0, h0);
 	ctx.imageSmoothing = true;
 	ctx.imageSmoothingQuality = "high";
 	ctx3.fillStyle = '#000000';
-	ctx3.font = `${17*w0/320}px Roboto, Sans-serif`;
-	ctx3.fillText('LOCATION OF BLACK IN THIS IMAGE', 20 * w0 / 320, 25 * w0 / 320);
+	ctx3.font = `${17*w0/320}px xkcd-script`;
+	ctx3.fillText('LOCATION OF BLACK INK IN THIS IMAGE:', 20 * w0 / 320, 28 * w0 / 320);
+
+	let f = w0/320;
+
+	ctx.strokeStyle = '#000000';
+	let lw = 2 * f;
+	ctx.lineWidth = lw;
+
+	ctx3.beginPath();
+	ctx3.moveTo(17.5 * f, 90 * f);
+	ctx3.lineTo(20 * f, 80 * f);
+	ctx3.lineTo(22.5 * f, 90 * f);
+	ctx3.moveTo(20 * f, 80 * f);
+	ctx3.lineTo(20 * f, 170 * f);
+	ctx3.lineTo(310 * f, 170 * f);
+	ctx3.moveTo(300 * f, 167.5 * f);
+	ctx3.lineTo(310 * f, 170 * f);
+	ctx3.lineTo(300 * f, 172.5 * f);
+	ctx3.moveTo(30 * f, 166 * f);
+	ctx3.lineTo(30 * f, 174 * f);
+	ctx3.moveTo(16 * f, 160 * f);
+	ctx3.lineTo(24 * f, 160 * f);
+	ctx3.stroke();
+
+	ctx3.font = `${10*w0/320}px xkcd-script`;
+	ctx3.fillText('0', 8 * f, 164*f);
+	ctx3.fillText('0', 27 * f, 184*f);
+
+	ctx.lineWidth = 0;
+
+	drawCanvasFrame(canvas3, false);
 }
 
 function getAmount(canvas)
@@ -96,8 +154,9 @@ function getAmount(canvas)
 	let white = 0;
 	for (let i = 0; i < data.length; i+=4)
 	{
+
 		let nonwhite = 
-			data[i + 0] < 255 || data[i + 1] < 255 || data[i + 2] < 255;
+			(data[i + 0] + data[i + 1] + data[i + 2])/3 < 128;
 
 		if (nonwhite) black++; else white++;
 	}
@@ -107,13 +166,16 @@ function getAmount(canvas)
 anim1 = anim1.then(chart => 
 {
 	chart.on('background-draw', event => {
-		let canvas = document.getElementById('slide1');
-		drawFrame(event.renderingContext, canvas.width-1, canvas.height-1);
+		let canvas = chart.render.offscreenCanvas;
+		drawFrame(event.renderingContext, 
+			(canvas.width-1)/window.devicePixelRatio, 
+			(canvas.height-1)/window.devicePixelRatio);
 		event.preventDefault();
 	});
 
 	chart.on('plot-marker-draw', event => {
 		event.renderingContext.strokeStyle = '#000000';
+		event.renderingContext.lineWidth = 2;
 	});
 
 	return chart.animate(
@@ -124,18 +186,22 @@ anim1 = anim1.then(chart =>
 				color: 'COLOR',
 				label: 'COLOR'
 			},
-			title: 'FRACTION OF THIS IMAGE WHICH IS',
+			title: 'FRACTION OF THIS IMAGE IS',
 			coordSystem: 'polar',
-			rotate: '-220deg'
+			rotate: '-210deg'
 		},
 		style: {
 			plot: { 
+				paddingRight: 0,
+				paddingLeft: 0,
+				paddingTop: '6%',
+				paddingBottom: '7%',
 				marker: { 
 					borderWidth: 1,
 					label: {
 						filter: 'color(#000000)',
 						position: 'top',
-						fontSize: '150%' 
+						fontSize: '170%' 
 					}
 				},
 				xAxis: { 
@@ -151,8 +217,14 @@ anim2 = anim2.then(chart =>
 {
 	chart.on('background-draw', event => {
 		let canvas = document.getElementById('slide1');
-		drawFrame(event.renderingContext, canvas.width-1, canvas.height-1);
+		drawFrame(event.renderingContext, 
+			(canvas.width-1)/window.devicePixelRatio, 
+			(canvas.height-1)/window.devicePixelRatio);
 		event.preventDefault();
+	});
+
+	chart.on('plot-axis-draw', event => {
+		event.renderingContext.lineWidth = 1.5;
 	});
 
 	return chart.animate(
@@ -160,13 +232,16 @@ anim2 = anim2.then(chart =>
 		data: { filter: record => record['COLOR'] == 'BLACK' },
 		config: {
 			channels: {
-				y: { set: 'AMOUNT', title: ' '},
+				y: { set: 'AMOUNT', title: ' ', range: { max: '100%' }},
 				x: 'SLIDE',
 			},
 			title: 'AMOUNT OF BLACK INK BY PANEL'
 		},
 		style: {
 			plot: {
+				marker: {
+					rectangleSpacing: 1.6
+				},
 				yAxis: {
 					interlacing: {
 						color: '#00000000'
@@ -176,7 +251,8 @@ anim2 = anim2.then(chart =>
 					color: '#000000',
 					label: { 
 						color: '#000000',
-						fontSize: '150%'
+						fontSize: '180%',
+						paddingTop: '1em'
 					},
 				}
 			}
