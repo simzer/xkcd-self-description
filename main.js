@@ -178,6 +178,10 @@ anim1 = anim1.then(chart =>
 		event.renderingContext.lineWidth = 2;
 	});
 
+	chart.on('update', () => {
+		draw3rdSlide();
+	});
+
 	return chart.animate(
 	{
 		config: {
@@ -186,7 +190,7 @@ anim1 = anim1.then(chart =>
 				color: 'COLOR',
 				label: 'COLOR'
 			},
-			title: 'FRACTION OF THIS IMAGE IS',
+			title: 'FRACTION OF THIS IMAGE WHICH IS',
 			coordSystem: 'polar',
 			rotate: '-210deg'
 		},
@@ -268,8 +272,6 @@ let lastAmounts = [
 
 let step = () => 
 {
-	draw3rdSlide();
-
 	let amounts = [
 		getAmount(document.getElementById('slide1')),
 		getAmount(document.getElementById('slide2')),

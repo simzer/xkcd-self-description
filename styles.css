@@ -1,11 +1,13 @@
 @font-face {
 	font-family: xkcd-script;
-	src: url('/xkcd-script.woff') format('woff');
+	src: url('/xkcd-script.woff') format('woff'),
+		url('/xkcd-script.ttf') format('truetype');
 }
 
 body {
 	text-align: center;
 	font-family: Roboto,sans-serif;
+	font-size: 0.8em;
 	width: 100%;
 	color: #444;
 	background-color: #fafafa;
@@ -20,7 +22,11 @@ h1 {
 }
 
 p {
-	padding: 1.5em;
+	padding: 0em;
+}
+
+#panels {
+	padding-bottom: 2em;
 }
 
 .slide {
