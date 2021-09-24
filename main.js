@@ -84,8 +84,8 @@ function draw3rdSlide()
 	ctx.imageSmoothing = true;
 	ctx.imageSmoothingQuality = "high";
 	ctx3.fillStyle = '#000000';
-	ctx3.font = '17px Roboto, Sans-serif';
-	ctx3.fillText('LOCATION OF BLACK IN THIS IMAGE', 20, 25);
+	ctx3.font = `${17*w0/320}px Roboto, Sans-serif`;
+	ctx3.fillText('LOCATION OF BLACK IN THIS IMAGE', 20 * w0 / 320, 25 * w0 / 320);
 }
 
 function getAmount(canvas)
