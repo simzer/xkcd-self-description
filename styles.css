@@ -1,7 +1,7 @@
 @font-face {
 	font-family: xkcd-script;
-	src: url('/xkcd-script.woff') format('woff'),
-		url('/xkcd-script.ttf') format('truetype');
+	src: url('xkcd-script.woff') format('woff'),
+		url('xkcd-script.ttf') format('truetype');
 }
 
 body {
