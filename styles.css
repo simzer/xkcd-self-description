@@ -27,6 +27,8 @@ p {
 
 #panels {
 	padding-bottom: 2em;
+	border: 0px;
+	margin: auto;
 }
 
 .slide {
