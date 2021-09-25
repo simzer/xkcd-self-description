@@ -115,8 +115,8 @@ function draw3rdSlide()
 	ctx.imageSmoothing = true;
 	ctx.imageSmoothingQuality = "high";
 	ctx3.fillStyle = '#000000';
-	ctx3.font = `${17*f}px xkcd-script`;
-	ctx3.fillText('LOCATION OF BLACK INK IN THIS IMAGE:', 20 * f, 28 * f);
+	ctx3.font = `${18*f}px xkcd-script`;
+	ctx3.fillText('LOCATION OF BLACK INK IN THIS IMAGE:', 16 * f, 32 * f);
 
 	ctx.strokeStyle = '#000000';
 	let lw = 2 * f;
