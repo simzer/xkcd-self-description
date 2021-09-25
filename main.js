@@ -72,7 +72,8 @@ function drawCanvasFrame(canvas, fill = true)
 	let h = canvas.height;
 
 	let ctx = canvas.getContext('2d');
-	drawFrame(ctx, w, h, fill);
+	ctx.translate(0.5, 0.5);
+	drawFrame(ctx, w-1, h-1, fill);
 }
 
 function draw3rdSlide()
@@ -101,6 +102,8 @@ function draw3rdSlide()
 	canvas3.width = w0;
 	canvas3.height = h0;
 
+	let f = w0/320;
+
 	let ctx3 = canvas3.getContext('2d');
 
 	ctx3.beginPath();
@@ -112,10 +115,8 @@ function draw3rdSlide()
 	ctx.imageSmoothing = true;
 	ctx.imageSmoothingQuality = "high";
 	ctx3.fillStyle = '#000000';
-	ctx3.font = `${17*w0/320}px xkcd-script`;
-	ctx3.fillText('LOCATION OF BLACK INK IN THIS IMAGE:', 20 * w0 / 320, 28 * w0 / 320);
-
-	let f = w0/320;
+	ctx3.font = `${17*f}px xkcd-script`;
+	ctx3.fillText('LOCATION OF BLACK INK IN THIS IMAGE:', 20 * f, 28 * f);
 
 	ctx.strokeStyle = '#000000';
 	let lw = 2 * f;
@@ -137,7 +138,7 @@ function draw3rdSlide()
 	ctx3.lineTo(24 * f, 160 * f);
 	ctx3.stroke();
 
-	ctx3.font = `${10*w0/320}px xkcd-script`;
+	ctx3.font = `${10*f}px xkcd-script`;
 	ctx3.fillText('0', 8 * f, 164*f);
 	ctx3.fillText('0', 27 * f, 184*f);
 

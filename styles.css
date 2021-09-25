@@ -32,8 +32,8 @@ p {
 }
 
 .slide {
-	width: 320px; 
-	height: 240px;
+	width: 240px; 
+	height: 180px;
 	display: inline-block;
 	margin: 0.3em;
 	background-color: #ffffff;
