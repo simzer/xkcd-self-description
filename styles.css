@@ -41,4 +41,6 @@ p {
 
 #vizzu-logo {
 	width:50px;
+	display: inline;
+	vertical-align: -0.075em;
 }
