@@ -308,7 +308,10 @@ let step = () =>
 		easing: 'ease-out'
 	}));
 
-	Promise.all([ anim1, anim2 ]).then(step);
+	let diffSum = 0;
+	for (let diff of diffs) diffSum += Math.abs(diff);
+
+	if (diffSum > 0) Promise.all([ anim1, anim2 ]).then(step);
 };
 
 Promise.all([ anim1, anim2 ]).then(step);
