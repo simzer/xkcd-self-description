@@ -9,3 +9,5 @@ in JavaScript using the Vizzu charting library.
 
 The code iteratively checks the generated charts and updates the underlying data
 for the chart generator. 
+
+Used font: [XKCD-font](https://github.com/ipython/xkcd-font)
