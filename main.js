@@ -82,7 +82,10 @@ function draw3rdSlide()
 	let w0 = canvas1.width;
 	let h0 = canvas1.height;
 
-	let canvas = new OffscreenCanvas(1.2*3*1.075 * w0, 1.2*3*1.075 * h0);
+	canvas = document.createElement('CANVAS');
+	canvas.width = 1.2*3*1.075 * w0;
+	canvas.height = 1.2*3*1.075 * h0;
+	//let canvas = new OffscreenCanvas(1.2*3*1.075 * w0, 1.2*3*1.075 * h0);
 
 	let ctx = canvas.getContext('2d');
 
